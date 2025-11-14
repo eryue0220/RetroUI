@@ -91,9 +91,9 @@ const transactions = [
 
 export default function TableWithStickyHeader() {
   return (
-    <div className="h-96 overflow-auto border-2 w-full shadow-none">
+    <div className="h-96 border-2">
       <Table className="border-0 shadow-none">
-        <Table.Header className="sticky top-0 z-1">
+        <Table.Header className="sticky top-0">
           <Table.Row className="bg-secondary hover:bg-secondary">
             <Table.Head className="w-[100px] text-secondary-foreground">
               ID

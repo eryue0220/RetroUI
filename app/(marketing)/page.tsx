@@ -25,6 +25,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/footer";
 import WorksWithSection from "@/components/WorksWithSection";
+
 async function getContributors(): Promise<
   { avatar: string; username: string; url: string }[]
 > {
@@ -56,7 +57,7 @@ export default async function Home() {
       <div className="bg-image bg-cover bg-no-repeat bg-center flex flex-col items-center min-h-screen">
         <section className="container max-w-6xl mx-auto px-4 lg:px-0 text-gray-900 flex justify-center items-center lg:gap-28 xl:gap-32 my-28">
           <div className="text-center lg:text-left w-full lg:w-2/3">
-            <Link href="/themes" className="mb-6 inline-block">
+            <Link href="/themes" className="mb-4 inline-block">
               <Badge>
                 Introducing RetroUI Themes!
                 <PaintbrushIcon className="ml-2 h-4 w-4 inline-block" />
@@ -198,13 +199,13 @@ export default async function Home() {
           A <span className="text-outlined">Growing</span> Community of Developers and Designers.
         </Text>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-2xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-3xl mx-auto">
           <div className="flex flex-col items-start relative mx-auto">
             <Text as="h3" className="mb-2 font-sans">
               Github Stars
             </Text>
             <Text className="text-outlined text-7xl lg:text-8xl font-head">
-              950+
+              1,000+
             </Text>
             <Image
               src="/images/shooting_star.svg"
