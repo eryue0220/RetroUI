@@ -57,9 +57,9 @@ export default async function Home() {
       <div className="bg-image bg-cover bg-no-repeat bg-center flex flex-col items-center min-h-screen">
         <section className="container max-w-6xl mx-auto px-4 lg:px-0 text-gray-900 flex justify-center items-center lg:gap-28 xl:gap-32 my-28">
           <div className="text-center lg:text-left w-full lg:w-2/3">
-            <Link href="/themes" className="mb-4 inline-block">
+            <Link href="/docs/components/calendar" className="mb-4 inline-block">
               <Badge>
-                Introducing RetroUI Themes!
+                New Calendar & Carousel components!
                 <PaintbrushIcon className="ml-2 h-4 w-4 inline-block" />
               </Badge>
             </Link>
