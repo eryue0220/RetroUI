@@ -216,6 +216,22 @@
       ]
     },
     {
+      "name": "drawer",
+      "type": "registry:component",
+      "title": "Drawer",
+      "description": "A component that can slide in from any side of the screen.",
+      "dependencies": [
+        "vaul"
+      ],
+      "files": [
+        {
+          "path": "components/retroui/Drawer.tsx",
+          "target": "components/retroui/Drawer.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "input",
       "type": "registry:component",
       "title": "Input",

@@ -80,6 +80,10 @@ export const componentConfig: {
       name: "dialog",
       filePath: "components/retroui/Dialog.tsx",
     },
+    drawer: {
+      name: "drawer",
+      filePath: "components/retroui/Drawer.tsx",
+    },
     input: {
       name: "input",
       filePath: "components/retroui/Input.tsx",
@@ -264,6 +268,16 @@ export const componentConfig: {
       preview: lazy(
         () => import("@/preview/charts/bar-chart-style-horizontal"),
       ),
+    },
+    "drawer-style-default": {
+      name: "drawer-style-default",
+      filePath: "preview/components/drawer-style-default.tsx",
+      preview: lazy(() => import("@/preview/components/drawer-style-default")),
+    },
+    "drawer-style-right-direction": {
+      name: "drawer-style-right-direction",
+      filePath: "preview/components/drawer-style-right-direction.tsx",
+      preview: lazy(() => import("@/preview/components/drawer-style-right-direction")),
     },
     "button-style-default": {
       name: "button-style-default",
