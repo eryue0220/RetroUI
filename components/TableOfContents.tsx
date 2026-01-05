@@ -14,7 +14,7 @@ function renderTOCItems(items: any[], level = 0) {
         <li key={index}>
           <a
             href={item.url}
-            className="text-sm hover:text-foreground transition-colors block py-1 border-l-2 border-transparent hover:border-border pl-2"
+            className="text-sm hover:text-foreground transition-colors block py-1 border-l-2 border-transparent hover:border-accent pl-2"
           >
             {item.title}
           </a>
@@ -31,7 +31,7 @@ export default function TableOfContents({ toc }: TableOfContentsProps) {
   }
 
   return (
-    <div className="border border-black p-4 rounded-sm max-h-60 overflow-y-auto sidebar-scroll">
+    <div className="border p-4 rounded-sm max-h-60 overflow-y-auto sidebar-scroll">
       <h3 className="mb-3 border-b border-black pb-2">
         On this Page
       </h3>
