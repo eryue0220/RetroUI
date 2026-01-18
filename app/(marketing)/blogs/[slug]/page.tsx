@@ -5,27 +5,43 @@ import { format } from "date-fns";
 import MDX from "@/components/MDX";
 import { Avatar, Badge, Button, Text } from "@/components/retroui";
 import { Metadata } from "next";
-import { MoveRightIcon, MoveUpRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import Footer from "@/components/footer";
+import { RichText } from "@payloadcms/richtext-lexical/react";
+import { JSXConverters } from "@/components/RichTextConverter";
+
 interface IProps {
   params: { slug: string[] };
 }
 
-function getBlogParams({ params }: IProps) {
-  const url = `/blogs/${params.slug}`;
-  const blog = allBlogs.find((blog) => blog.url === url);
+type Post = {
+  id: number,
+  title: string,
+  slug: string,
+  publishedAt: string,
+  content: any,
+  excerpt: string,
+  tags: {
+    name: string,
+    slug: string
+  }[],
+  featuredImage: {
+    url: string,
+    alt: string
+  },
+}
 
-  if (!blog) {
-    return null;
-  }
-
-  return blog;
+async function getBlogParams({ params }: IProps) {
+  const res = await fetch(`https://cms.retroui.dev/api/posts/slug/${params.slug}`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+  const post = await res.json()
+  return post;
 }
 
 export async function generateMetadata({ params }: IProps): Promise<Metadata> {
-  const blog = getBlogParams({ params });
+  const blog: Post = await getBlogParams({ params });
 
   if (!blog) {
     return {
@@ -35,22 +51,18 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 
   return {
     title: `${blog.title} | RetroUI Blogs`,
-    description: blog.description,
+    description: blog.excerpt,
     openGraph: {
-      images: blog.coverImage,
+      images: blog.featuredImage.url,
       title: `${blog.title} | RetroUI Blogs`,
     },
   };
 }
 
-export default function page({ params }: IProps) {
-  const blog = getBlogParams({ params });
+export default async function page({ params }: IProps) {
+  const blog: Post | null = await getBlogParams({ params });
 
   if (!blog) {
-    return notFound();
-  }
-
-  if (!blog.publishedAt || blog.status !== "published") {
     return notFound();
   }
 
@@ -65,26 +77,29 @@ export default function page({ params }: IProps) {
           <div className="flex items-center gap-3">
             {blog.tags.map((tag) => (
               <Badge
-                key={tag}
+                key={tag.slug}
                 size="sm"
                 variant="surface"
                 className={`bg-${["red", "green", "blue", "yellow", "purple", "pink"][
                   blog.tags.indexOf(tag) % 6
-                  ]
+                ]
                   }-300`}
               >
-                {tag}
+                {tag.name}
               </Badge>
             ))}
           </div>
         </div>
 
-        <Text as="h1" className="mb-12">
+        <Text as="h1" className="mb-2">
           {blog.title}
         </Text>
+        <Text className="text-muted-foreground mb-12">
+          {blog.excerpt}
+        </Text>
         <Image
-          src={blog.coverImage}
-          alt={blog.title}
+          src={`https://cms.retroui.dev${blog.featuredImage.url}`}
+          alt={blog.featuredImage.alt}
           width={1200}
           height={800}
           className="mb-8"
@@ -92,12 +107,12 @@ export default function page({ params }: IProps) {
         <div className="flex justify-between items-start">
           <div className="flex gap-4">
             <Avatar>
-              <Avatar.Image src={blog.author.avatar} alt={blog.author.name} />
-              <Avatar.Fallback>{blog.author.name}</Avatar.Fallback>
+              <Avatar.Image src="https://pub-5f7cbdfd9ffa4c838e386788f395f0c4.r2.dev/arif.jpg" alt="Arif Hossain" />
+              <Avatar.Fallback>AH</Avatar.Fallback>
             </Avatar>
             <div>
-              <Text as="h5">{blog.author.name}</Text>
-              {blog.author.linkedin && (
+              <Text as="h5">Arif Hossain</Text>
+              {/* {blog.author.linkedin && (
                 <Link
                   href={`https://www.linkedin.com/in/${blog.author.linkedin}`}
                   target="_blank"
@@ -105,23 +120,22 @@ export default function page({ params }: IProps) {
                 >
                   @{blog.author.linkedin}
                 </Link>
-              )}
-              {blog.author.x && (
-                <Link
-                  href={`https://x.com/@${blog.author.x}`}
-                  target="_blank"
-                  className="text-muted-foreground"
-                >
-                  @{blog.author.x}
-                </Link>
-              )}
+              )} */}
+              {/* {blog.author.x && ( */}
+              <Link
+                href={`https://x.com/@ariflogs`}
+                target="_blank"
+                className="text-muted-foreground"
+              >
+                @ariflogs
+              </Link>
+              {/* )} */}
             </div>
           </div>
 
           <Link
             target="_blank"
-            href={`https://x.com/share?url=${"https://retroui.dev" + blog.url
-              }&text=${blog.title}.%0ACheck it out 👉`}
+            href={`https://x.com/share?url=${`https://retroui.dev/blogs/${blog.slug}`}&text=${blog.title}.%0ACheck it out 👉`}
           >
             <Button size="sm" variant="outline">
               Share on X
@@ -129,9 +143,13 @@ export default function page({ params }: IProps) {
           </Link>
         </div>
       </div>
-      <MDX code={blog.body.code} type="blog" />
-      
-      <hr className="my-12"/>
+      {/* <MDX code={blog.body.code} type="blog" /> */}
+      <RichText
+        data={blog.content}
+        converters={JSXConverters}
+      />
+
+      <hr className="my-12" />
 
       <Button asChild aria-label="Return to all blog posts" variant="secondary">
         <Link href="/blogs" className="inline-flex">← Back to blogs</Link>

@@ -81,13 +81,11 @@ export default function RootLayout({
         className={`${head.variable} ${sans.variable} ${mono.variable}`}
       >
         <ThemeProvider>
-          <ThemeWrapper>
             <div className="bg-background text-foreground">
               <TopNav />
               {children}
               <Toaster />
             </div>
-          </ThemeWrapper>
         </ThemeProvider>
         <SpeedInsights />
         <Analytics />
