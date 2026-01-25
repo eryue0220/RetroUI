@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
     title: `${blog.title} | RetroUI Blogs`,
     description: blog.excerpt,
     alternates: {
-      canonical: `https://retroui.dev/blogs/${blog.slug}`,                     
+      canonical: `https://www.retroui.dev/blogs/${blog.slug}`,                     
     },
     openGraph: {
       images: blog.featuredImage.url,
